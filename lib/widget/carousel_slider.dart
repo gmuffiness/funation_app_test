@@ -21,8 +21,8 @@ class _CarouselImageState extends State<CarouselImage> {
   void initState() {
     super.initState();
     movies = widget.movies; // Q. 여기서 widget은 어디로부터 온 것일까?
-    images = movies.map((m) => Image.asset(m.poster)).toList();
-    keywords = movies.map((m) => m.keyword).toList();
+    images = movies.map((m) => Image.asset(m.thumbnail)).toList();
+    keywords = movies.map((m) => m.body).toList();
     likes = movies.map((m) => m.like).toList();
     _currentKeyword = keywords[0];
   }

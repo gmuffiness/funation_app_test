@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:netflix_clone_practice/model/api_adapter.dart';
 import 'package:netflix_clone_practice/model/movie_model.dart';
 import 'package:netflix_clone_practice/widget/box_slider.dart';
 import 'package:netflix_clone_practice/widget/circle_slider.dart';
 import 'package:netflix_clone_practice/widget/carousel_slider.dart';
 import 'dart:ui';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -14,37 +17,53 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Movie> movies = [
     Movie.fromMap({
       'title': '하모리층 톳 쿠키',
-      'keyword': '톳으로 만나는 제주의 환경',
-      'poster': 'content1.png',
-      'money': '6,000원 남음',
-      'percentage': '82%',
+      'body': '톳으로 만나는 제주의 환경',
+      'thumbnail': 'content1.png',
+      'target_amount': '6,000원 남음',
       'like': false,
     }),
     Movie.fromMap({
       'title': '자연에서 만들어서 자연스러운 백',
-      'keyword': 'test1',
-      'poster': 'content2.png',
-      'money': '6,000원 남음',
-      'percentage': '82%',
+      'body': 'test1',
+      'thumbnail': 'content2.png',
+      'target_amount': '6,000원 남음',
       'like': false,
     }),
     Movie.fromMap({
       'title': '고기인듯 고기아닌 콩고기',
-      'keyword': 'test2',
-      'poster': 'content3.png',
-      'money': '6,000원 남음',
-      'percentage': '82%',
+      'body': 'test2',
+      'thumbnail': 'content3.png',
+      'target_amount': '6,000원 남음',
       'like': false,
     }),
     Movie.fromMap({
       'title': '싱그러운 딸기 맛을 그대로',
-      'keyword': 'test3',
-      'poster': 'content4.png',
-      'money': '6,000원 남음',
-      'percentage': '82%',
+      'body': 'test3',
+      'thumbnail': 'content4.png',
+      'target_amount': '6,000원 남음',
       'like': false,
     }),
   ];
+
+  // List<Movie> movies = [];
+  // bool isLoading = false;
+
+  // _fetchMovie() async {
+  //   setState(() {
+  //     isLoading = true;
+  //   });
+  //   final response =
+  //       await http.get('http://lunarbear.pythonanywhere.com/post/post/');
+  //   if (response.statusCode == 200) {
+  //     setState(() {
+  //       movies = parseMovies(utf8.decode(response.bodyBytes));
+  //       isLoading = false;
+  //     });
+  //   } else {
+  //     throw Exception('failed to load data');
+  //   }
+  // }
+
   @override
   Widget build(BuildContext context) {
     return ListView(

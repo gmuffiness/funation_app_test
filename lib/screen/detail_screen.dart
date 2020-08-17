@@ -33,7 +33,7 @@ class _DetailScreenState extends State<DetailScreen> {
                     width: double.maxFinite,
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                        image: AssetImage('images/' + widget.movie.poster),
+                        image: AssetImage('images/' + widget.movie.thumbnail),
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -49,7 +49,7 @@ class _DetailScreenState extends State<DetailScreen> {
                                 Container(
                                   padding: EdgeInsets.fromLTRB(0, 45, 0, 10),
                                   child: Image.asset(
-                                    'images/' + widget.movie.poster,
+                                    'images/' + widget.movie.thumbnail,
                                     height: 300,
                                   ),
                                 ),

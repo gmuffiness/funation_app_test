@@ -52,13 +52,13 @@ List<Widget> makeBoxImages(BuildContext context, List<Movie> movies) {
               // crossAxisAlignment: CrossAxisAlignment.start // 텍스트 왼쪽 가게하고 싶으면 이거하고 수정 좀 하면 될 듯!
               children: <Widget>[
                 Expanded(
-                  child: Image.asset('images/' + movies[i].poster),
+                  child: Image.asset('images/' + movies[i].thumbnail),
                 ),
                 Text(
                   movies[i].title,
                 ),
                 Text(
-                  movies[i].keyword,
+                  movies[i].body,
                   style: TextStyle(fontSize: 11),
                 )
               ],

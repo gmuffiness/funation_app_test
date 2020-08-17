@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:netflix_clone_practice/screen/home_screen.dart';
+import 'package:netflix_clone_practice/screen/login_screen.dart';
 import 'package:netflix_clone_practice/screen/more_screen.dart';
 import 'package:netflix_clone_practice/screen/search_screen.dart';
 import 'package:netflix_clone_practice/widget/bottom_bar.dart';
@@ -37,7 +38,7 @@ class _MyappState extends State<MyApp> {
                     child: Text('save'),
                   ),
                 ),
-                Container(),
+                LoginScreen(),
                 MoreScreen(),
               ],
             ),

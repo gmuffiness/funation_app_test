@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/utilities/constants.dart';
+import 'package:netflix_clone_practice/utilities/constants.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -15,7 +15,7 @@ class _LoginScreenState extends State<LoginScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Text(
-          'Email',
+          '이메일',
           style: kLabelStyle,
         ),
         SizedBox(height: 10.0),
@@ -36,7 +36,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 Icons.email,
                 color: Colors.white,
               ),
-              hintText: 'Enter your Email',
+              hintText: '이메일을 입력하세요.',
               hintStyle: kHintTextStyle,
             ),
           ),
@@ -50,7 +50,7 @@ class _LoginScreenState extends State<LoginScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Text(
-          'Password',
+          '비밀번호',
           style: kLabelStyle,
         ),
         SizedBox(height: 10.0),
@@ -71,7 +71,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 Icons.lock,
                 color: Colors.white,
               ),
-              hintText: 'Enter your Password',
+              hintText: '비밀번호를 입력하세요.',
               hintStyle: kHintTextStyle,
             ),
           ),
@@ -87,7 +87,7 @@ class _LoginScreenState extends State<LoginScreen> {
         onPressed: () => print('Forgot Password Button Pressed'),
         padding: EdgeInsets.only(right: 0.0),
         child: Text(
-          'Forgot Password?',
+          '아이디/비밀번호 찾기',
           style: kLabelStyle,
         ),
       ),
@@ -113,7 +113,7 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           ),
           Text(
-            'Remember me',
+            '로그인 유지',
             style: kLabelStyle,
           ),
         ],
@@ -134,7 +134,7 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
         color: Colors.white,
         child: Text(
-          'LOGIN',
+          '로그인',
           style: TextStyle(
             color: Color(0xFFFFE082),
             letterSpacing: 1.5,
@@ -169,41 +169,71 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget _buildSocialBtn(Function onTap, AssetImage logo) {
     return GestureDetector(
       onTap: onTap,
-      child: Container(
-        height: 60.0,
-        width: 60.0,
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black26,
-              offset: Offset(0, 2),
-              blurRadius: 6.0,
+      child: Row(
+        children: <Widget>[
+          Container(
+            height: 60.0,
+            width: 60.0,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: Colors.white,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black26,
+                  offset: Offset(0, 2),
+                  blurRadius: 6.0,
+                ),
+              ],
+              image: DecorationImage(
+                image: logo,
+              ),
             ),
-          ],
-          image: DecorationImage(
-            image: logo,
           ),
-        ),
+          Container(
+            // padding: EdgeInsets.symmetric(vertical: 25.0),
+            // width: double.infinity,
+            child: RaisedButton(
+              elevation: 5.0,
+              onPressed: () => print('계정으로 로그인 버튼 클릭'),
+              padding: EdgeInsets.all(15.0),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(30.0),
+              ),
+              color: Colors.white,
+              child: Text(
+                '계정으로 로그인',
+                style: TextStyle(
+                  color: Color(0xFFFFE082),
+                  letterSpacing: 1.5,
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'OpenSans',
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
 
-  Widget _buildSocialBtnRow() {
+  Widget _buildSocialBtnColumn() {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 30.0),
-      child: Row(
+      child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
           _buildSocialBtn(
-            () => print('Login with Facebook'),
+            () => print('Facebook 계정으로 시작'),
             AssetImage(
               'assets/logos/facebook.jpg',
             ),
           ),
+          SizedBox(
+            height: 20,
+          ),
           _buildSocialBtn(
-            () => print('Login with Google'),
+            () => print('Google 계정으로 시작'),
             AssetImage(
               'assets/logos/google.jpg',
             ),
@@ -220,7 +250,7 @@ class _LoginScreenState extends State<LoginScreen> {
         text: TextSpan(
           children: [
             TextSpan(
-              text: 'Don\'t have an Account? ',
+              text: '기부니가좋다에 처음이신가요? ',
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 18.0,
@@ -228,7 +258,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
             TextSpan(
-              text: 'Sign Up',
+              text: '회원가입',
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 18.0,
@@ -279,7 +309,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Text(
-                        'Sign In',
+                        '기부니가좋다',
                         style: TextStyle(
                           color: Colors.white,
                           fontFamily: 'OpenSans',
@@ -288,6 +318,13 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                       SizedBox(height: 30.0),
+                      Container(
+                        child: CircleAvatar(
+                          radius: 30,
+                          backgroundColor: Colors.amber[600],
+                          backgroundImage: AssetImage('images/gibuni.png'),
+                        ),
+                      ),
                       _buildEmailTF(),
                       SizedBox(
                         height: 30.0,
@@ -297,7 +334,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       _buildRememberMeCheckbox(),
                       _buildLoginBtn(),
                       _buildSignInWithText(),
-                      _buildSocialBtnRow(),
+                      _buildSocialBtnColumn(),
                       _buildSignupBtn(),
                     ],
                   ),
