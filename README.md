@@ -1,17 +1,12 @@
-# funation_app_toyproject
-# origin from netflix_clone_practice
+# Funation_App
+![기부니가좋다 로고](https://user-images.githubusercontent.com/35298963/89778909-467e4f80-db49-11ea-8304-a218e0487e7f.png)
 
-A new Flutter project.
+기부를 재미있게! 소액기부 플랫폼 funation's application
 
-## Getting Started
+# Screenshots
 
-This project is a starting point for a Flutter application.
+<img src="https://user-images.githubusercontent.com/35298963/90977910-70416880-e584-11ea-87ca-7cbb49d61865.PNG"  width="250" height="450">
 
-A few resources to get you started if this is your first Flutter project:
+<img src="https://user-images.githubusercontent.com/35298963/90977911-72a3c280-e584-11ea-840d-aee981e9bd8c.PNG"  width="250" height="450">
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+<img src="https://user-images.githubusercontent.com/35298963/90977913-746d8600-e584-11ea-8152-7335458a15f4.PNG"  width="250" height="450">
