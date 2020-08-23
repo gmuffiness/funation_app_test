@@ -5,8 +5,4 @@
 
 # Screenshots
 
-<img src="https://user-images.githubusercontent.com/35298963/90977910-70416880-e584-11ea-87ca-7cbb49d61865.PNG"  width="250" height="450">
-
-<img src="https://user-images.githubusercontent.com/35298963/90977911-72a3c280-e584-11ea-840d-aee981e9bd8c.PNG"  width="250" height="450">
-
-<img src="https://user-images.githubusercontent.com/35298963/90977913-746d8600-e584-11ea-8152-7335458a15f4.PNG"  width="250" height="450">
+<img src="https://user-images.githubusercontent.com/35298963/90977910-70416880-e584-11ea-87ca-7cbb49d61865.PNG"  width="250" height="450"><img src="https://user-images.githubusercontent.com/35298963/90977911-72a3c280-e584-11ea-840d-aee981e9bd8c.PNG"  width="250" height="450"><img src="https://user-images.githubusercontent.com/35298963/90977913-746d8600-e584-11ea-8152-7335458a15f4.PNG"  width="250" height="450">
