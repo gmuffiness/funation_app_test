@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:netflix_clone_practice/utilities/constants.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -9,6 +10,27 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   bool _rememberMe = false;
+  bool _isLoggedIn = false;
+
+  GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email']);
+
+  _login() async {
+    try {
+      await _googleSignIn.signIn();
+      setState(() {
+        _isLoggedIn = true;
+      });
+    } catch (err) {
+      print(err);
+    }
+  }
+
+  _logout() {
+    _googleSignIn.signOut();
+    setState(() {
+      _isLoggedIn = false;
+    });
+  }
 
   Widget _buildEmailTF() {
     return Column(
@@ -194,7 +216,9 @@ class _LoginScreenState extends State<LoginScreen> {
             // width: double.infinity,
             child: RaisedButton(
               elevation: 5.0,
-              onPressed: () => print('계정으로 로그인 버튼 클릭'),
+              onPressed: () {
+                _login();
+              },
               padding: EdgeInsets.all(15.0),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(30.0),

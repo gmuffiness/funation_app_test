@@ -56,9 +56,10 @@ class _DetailScreenState extends State<DetailScreen> {
                                 Container(
                                   padding: EdgeInsets.all(7),
                                   child: Text(
-                                    '99% 일치 2019 15+ 시즌 1개',
+                                    '83% 진행 중',
                                     textAlign: TextAlign.center,
-                                    style: TextStyle(fontSize: 13),
+                                    style: TextStyle(
+                                        fontSize: 23, color: Colors.white),
                                   ),
                                 ),
                                 Container(
@@ -67,6 +68,7 @@ class _DetailScreenState extends State<DetailScreen> {
                                     widget.movie.title,
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
+                                        color: Colors.white,
                                         fontWeight: FontWeight.bold,
                                         fontSize: 16),
                                   ),
@@ -75,30 +77,41 @@ class _DetailScreenState extends State<DetailScreen> {
                                   padding: EdgeInsets.all(3),
                                   child: RaisedButton(
                                     onPressed: () {},
-                                    color: Colors.red,
+                                    color: Colors.amber,
                                     child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       children: <Widget>[
-                                        Icon(Icons.play_arrow),
-                                        Text('재생')
+                                        // Icon(
+                                        //   Icons.play_arrow,
+                                        //   color: Colors.white,
+                                        // ),
+                                        Text(
+                                          '추첨 참여하러 가기',
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.bold),
+                                        ),
                                       ],
                                     ),
                                   ),
                                 ),
-                                Container(
-                                  padding: EdgeInsets.all(5),
-                                  child: Text(widget.movie.toString()),
+                                SizedBox(
+                                  height: 60,
                                 ),
-                                Container(
-                                  padding: EdgeInsets.all(5),
-                                  alignment: Alignment.centerLeft,
-                                  child: Text(
-                                    '출연 : 현빈, 손예진, 서지혜\n제작자: 이정효, 박지은',
-                                    style: TextStyle(
-                                        color: Colors.white60, fontSize: 12),
-                                  ),
-                                )
+                                // Container(
+                                //   padding: EdgeInsets.all(5),
+                                //   child: Text(widget.movie.toString()),
+                                // ),
+                                // Container(
+                                //   padding: EdgeInsets.all(5),
+                                //   alignment: Alignment.centerLeft,
+                                //   child: Text(
+                                //     '출연 : 현빈, 손예진, 서지혜\n제작자: 이정효, 박지은',
+                                //     style: TextStyle(
+                                //         color: Colors.white60, fontSize: 12),
+                                //   ),
+                                // )
                               ],
                             ),
                           ),
@@ -125,16 +138,21 @@ class _DetailScreenState extends State<DetailScreen> {
                         onTap: () {},
                         child: Column(
                           children: <Widget>[
-                            like ? Icon(Icons.check) : Icon(Icons.add),
+                            like
+                                ? Icon(Icons.check)
+                                : Icon(
+                                    Icons.favorite,
+                                    color: Colors.pink,
+                                  ),
                             Padding(
                               padding: EdgeInsets.all(5),
                             ),
                             Text(
-                              '내가 찜한 콘텐츠',
+                              '담아두기',
                               style: TextStyle(
-                                fontSize: 11,
-                                color: Colors.white60,
-                              ),
+                                  fontSize: 13,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold),
                             ),
                           ],
                         ),
@@ -145,14 +163,19 @@ class _DetailScreenState extends State<DetailScreen> {
                       child: Container(
                         child: Column(
                           children: <Widget>[
-                            Icon(Icons.thumb_up),
+                            Icon(
+                              Icons.thumb_up,
+                              color: Colors.black,
+                            ),
                             Padding(
                               padding: EdgeInsets.all(5),
                             ),
                             Text(
-                              '평가',
+                              '좋아요',
                               style: TextStyle(
-                                  fontSize: 11, color: Colors.white60),
+                                  fontSize: 13,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold),
                             ),
                           ],
                         ),
@@ -168,7 +191,9 @@ class _DetailScreenState extends State<DetailScreen> {
                             Text(
                               '공유',
                               style: TextStyle(
-                                  fontSize: 11, color: Colors.white60),
+                                  fontSize: 13,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold),
                             ),
                           ],
                         ),
