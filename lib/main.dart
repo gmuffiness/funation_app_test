@@ -19,7 +19,7 @@ class _MyappState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'BbongFlix',
+      title: '기부니가좋다',
       theme: ThemeData(
         brightness: Brightness.light,
         primaryColor: Colors.white,
