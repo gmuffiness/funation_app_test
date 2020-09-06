@@ -1,35 +1,153 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:netflix_clone_practice/model/firebase_provider.dart';
 import 'package:netflix_clone_practice/utilities/constants.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+_LoginScreenState pageState;
 
 class LoginScreen extends StatefulWidget {
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  _LoginScreenState createState() {
+    pageState = _LoginScreenState();
+    return pageState;
+  }
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  bool _rememberMe = false;
-  bool _isLoggedIn = false;
+  TextEditingController _mailCon = TextEditingController();
+  TextEditingController _pwCon = TextEditingController();
+  bool doRemember = false;
 
-  GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email']);
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  FirebaseProvider fp;
 
-  _login() async {
-    try {
-      await _googleSignIn.signIn();
-      setState(() {
-        _isLoggedIn = true;
-      });
-    } catch (err) {
-      print(err);
-    }
+  @override
+  void initState() {
+    super.initState();
+    getRememberInfo();
   }
 
-  _logout() {
-    _googleSignIn.signOut();
-    setState(() {
-      _isLoggedIn = false;
-    });
+  @override
+  void dispose() {
+    setRememberInfo();
+    _mailCon.dispose();
+    _pwCon.dispose();
+    super.dispose();
+  }
+
+  // GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email']);
+
+  @override
+  Widget build(BuildContext context) {
+    fp = Provider.of<FirebaseProvider>(context);
+
+    logger.d(fp.getUser());
+    return Scaffold(
+      key: _scaffoldKey,
+      body: AnnotatedRegion<SystemUiOverlayStyle>(
+        value: SystemUiOverlayStyle.light,
+        child: GestureDetector(
+          onTap: () => FocusScope.of(context).unfocus(),
+          child: Stack(
+            children: <Widget>[
+              Container(
+                height: double.infinity,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Color(0xFFFFC107),
+                      Color(0xFFFFB300),
+                      Color(0xFFFFA000),
+                      Color(0xFFFF6F00),
+                    ],
+                    stops: [0.1, 0.4, 0.7, 0.9],
+                  ),
+                ),
+              ),
+              Container(
+                height: double.infinity,
+                child: SingleChildScrollView(
+                  physics: AlwaysScrollableScrollPhysics(),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 40.0,
+                    vertical: 120.0,
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Text(
+                        '기부니가좋다',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontFamily: 'OpenSans',
+                          fontSize: 30.0,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(height: 30.0),
+                      Container(
+                        child: CircleAvatar(
+                          radius: 30,
+                          backgroundColor: Colors.amber[600],
+                          backgroundImage: AssetImage('images/gibuni.png'),
+                        ),
+                      ),
+                      _buildEmailTF(),
+                      SizedBox(
+                        height: 30.0,
+                      ),
+                      _buildPasswordTF(),
+                      _buildForgotPasswordBtn(),
+                      _buildRememberMeCheckbox(),
+                      (fp.getUser() != null &&
+                              fp.getUser().isEmailVerified == false)
+                          ? Container(
+                              margin: const EdgeInsets.symmetric(
+                                  horizontal: 30, vertical: 10),
+                              decoration: BoxDecoration(color: Colors.red[300]),
+                              child: Column(
+                                children: <Widget>[
+                                  Padding(
+                                    padding: const EdgeInsets.all(10.0),
+                                    child: Text(
+                                      "Mail authentication did not complete."
+                                      "\nPlease check your verification email.",
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                  ),
+                                  RaisedButton(
+                                    color: Colors.lightBlue[400],
+                                    textColor: Colors.white,
+                                    child: Text("Resend Verify Email"),
+                                    onPressed: () {
+                                      FocusScope.of(context).requestFocus(
+                                          new FocusNode()); // 키보드 감춤
+                                      fp.getUser().sendEmailVerification();
+                                    },
+                                  )
+                                ],
+                              ),
+                            )
+                          : Container(),
+                      _buildLoginBtn(),
+                      _buildSignInWithText(),
+                      _buildSocialBtnColumn(),
+                      _buildSignupBtn(),
+                    ],
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
+    );
   }
 
   Widget _buildEmailTF() {
@@ -47,6 +165,7 @@ class _LoginScreenState extends State<LoginScreen> {
           height: 60.0,
           child: TextField(
             keyboardType: TextInputType.emailAddress,
+            controller: _mailCon,
             style: TextStyle(
               color: Colors.white,
               fontFamily: 'OpenSans',
@@ -82,6 +201,7 @@ class _LoginScreenState extends State<LoginScreen> {
           height: 60.0,
           child: TextField(
             obscureText: true,
+            controller: _pwCon,
             style: TextStyle(
               color: Colors.white,
               fontFamily: 'OpenSans',
@@ -124,12 +244,12 @@ class _LoginScreenState extends State<LoginScreen> {
           Theme(
             data: ThemeData(unselectedWidgetColor: Colors.white),
             child: Checkbox(
-              value: _rememberMe,
+              value: doRemember,
               checkColor: Colors.black,
               activeColor: Colors.white,
-              onChanged: (value) {
+              onChanged: (newValue) {
                 setState(() {
-                  _rememberMe = value;
+                  doRemember = newValue;
                 });
               },
             ),
@@ -149,7 +269,10 @@ class _LoginScreenState extends State<LoginScreen> {
       width: double.infinity,
       child: RaisedButton(
         elevation: 5.0,
-        onPressed: () => print('Login Button Pressed'),
+        onPressed: () {
+          FocusScope.of(context).requestFocus(new FocusNode()); // 키보드 감춤
+          _signIn();
+        },
         padding: EdgeInsets.all(15.0),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30.0),
@@ -217,7 +340,8 @@ class _LoginScreenState extends State<LoginScreen> {
             child: RaisedButton(
               elevation: 5.0,
               onPressed: () {
-                _login();
+                FocusScope.of(context).requestFocus(new FocusNode()); // 키보드 감춤
+                _signInWithGoogle();
               },
               padding: EdgeInsets.all(15.0),
               shape: RoundedRectangleBorder(
@@ -295,79 +419,77 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: AnnotatedRegion<SystemUiOverlayStyle>(
-        value: SystemUiOverlayStyle.light,
-        child: GestureDetector(
-          onTap: () => FocusScope.of(context).unfocus(),
-          child: Stack(
-            children: <Widget>[
-              Container(
-                height: double.infinity,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      Color(0xFFFFC107),
-                      Color(0xFFFFB300),
-                      Color(0xFFFFA000),
-                      Color(0xFFFF6F00),
-                    ],
-                    stops: [0.1, 0.4, 0.7, 0.9],
-                  ),
-                ),
-              ),
-              Container(
-                height: double.infinity,
-                child: SingleChildScrollView(
-                  physics: AlwaysScrollableScrollPhysics(),
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 40.0,
-                    vertical: 120.0,
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text(
-                        '기부니가좋다',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontFamily: 'OpenSans',
-                          fontSize: 30.0,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      SizedBox(height: 30.0),
-                      Container(
-                        child: CircleAvatar(
-                          radius: 30,
-                          backgroundColor: Colors.amber[600],
-                          backgroundImage: AssetImage('images/gibuni.png'),
-                        ),
-                      ),
-                      _buildEmailTF(),
-                      SizedBox(
-                        height: 30.0,
-                      ),
-                      _buildPasswordTF(),
-                      _buildForgotPasswordBtn(),
-                      _buildRememberMeCheckbox(),
-                      _buildLoginBtn(),
-                      _buildSignInWithText(),
-                      _buildSocialBtnColumn(),
-                      _buildSignupBtn(),
-                    ],
-                  ),
-                ),
-              )
-            ],
-          ),
+  void _signIn() async {
+    _scaffoldKey.currentState
+      ..hideCurrentSnackBar()
+      ..showSnackBar(SnackBar(
+        duration: Duration(seconds: 10),
+        content: Row(
+          children: <Widget>[
+            CircularProgressIndicator(),
+            Text("   Signing-In...")
+          ],
         ),
-      ),
-    );
+      ));
+    bool result = await fp.signInWithEmail(_mailCon.text, _pwCon.text);
+    _scaffoldKey.currentState.hideCurrentSnackBar();
+    if (result == false) showLastFBMessage();
+  }
+
+  void _signInWithGoogle() async {
+    _scaffoldKey.currentState
+      ..hideCurrentSnackBar()
+      ..showSnackBar(SnackBar(
+        duration: Duration(seconds: 10),
+        content: Row(
+          children: <Widget>[
+            CircularProgressIndicator(),
+            Text("   Signing-In...")
+          ],
+        ),
+      ));
+    bool result = await fp.signInWithGoogleAccount();
+    _scaffoldKey.currentState.hideCurrentSnackBar();
+    if (result == false) showLastFBMessage();
+  }
+
+  getRememberInfo() async {
+    logger.d(doRemember);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      doRemember = (prefs.getBool("doRemember") ?? false);
+    });
+    if (doRemember) {
+      setState(() {
+        _mailCon.text = (prefs.getString("userEmail") ?? "");
+        _pwCon.text = (prefs.getString("userPasswd") ?? "");
+      });
+    }
+  }
+
+  setRememberInfo() async {
+    logger.d(doRemember);
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool("doRemember", doRemember);
+    if (doRemember) {
+      prefs.setString("userEmail", _mailCon.text);
+      prefs.setString("userPasswd", _pwCon.text);
+    }
+  }
+
+  showLastFBMessage() {
+    _scaffoldKey.currentState
+      ..hideCurrentSnackBar()
+      ..showSnackBar(SnackBar(
+        backgroundColor: Colors.red[400],
+        duration: Duration(seconds: 10),
+        content: Text(fp.getLastFBMessage()),
+        action: SnackBarAction(
+          label: "Done",
+          textColor: Colors.white,
+          onPressed: () {},
+        ),
+      ));
   }
 }

@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:netflix_clone_practice/model/firebase_provider.dart';
+import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class MoreScreen extends StatelessWidget {
+  // GoogleSignInAccount _currentUser;
+  FirebaseProvider fp;
   @override
   Widget build(BuildContext context) {
+    fp = Provider.of<FirebaseProvider>(context);
     return Container(
       child: Center(
         child: Column(
@@ -13,24 +19,30 @@ class MoreScreen extends StatelessWidget {
               padding: EdgeInsets.only(top: 50),
               child: CircleAvatar(
                 radius: 100,
-                backgroundImage: AssetImage('images/bbongflix_logo.png'),
+                backgroundColor: Colors.transparent,
+                backgroundImage: AssetImage(
+                  'images/gibuni.png',
+                ),
               ),
+              // child: GoogleUserCircleAvatar(
+              //   identity: _currentUser,
+              // ),
             ),
             Container(
               padding: EdgeInsets.only(top: 15),
               child: Text(
-                'Daejeong',
+                fp.getUser().displayName ?? "",
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 25,
-                    color: Colors.white),
+                    color: Colors.black),
               ),
             ),
             Container(
               padding: EdgeInsets.all(10),
               width: 140,
               height: 5,
-              color: Colors.red,
+              color: Colors.amber,
             ),
             Container(
               padding: EdgeInsets.all(10),
@@ -45,11 +57,14 @@ class MoreScreen extends StatelessWidget {
               ),
             ),
             Container(
+              child: Text(fp.getUser().email),
+            ),
+            Container(
               padding: EdgeInsets.all(10),
               child: FlatButton(
                 onPressed: () {},
                 child: Container(
-                  color: Colors.red,
+                  color: Colors.amber,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[

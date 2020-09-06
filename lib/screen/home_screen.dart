@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:netflix_clone_practice/model/api_adapter.dart';
+import 'package:netflix_clone_practice/model/firebase_provider.dart';
 import 'package:netflix_clone_practice/model/movie_model.dart';
+import 'package:netflix_clone_practice/screen/login_screen.dart';
+import 'package:netflix_clone_practice/screen/more_screen.dart';
+import 'package:netflix_clone_practice/screen/search_screen.dart';
+import 'package:netflix_clone_practice/widget/bottom_bar.dart';
 import 'package:netflix_clone_practice/widget/box_slider.dart';
 import 'package:netflix_clone_practice/widget/circle_slider.dart';
 import 'package:netflix_clone_practice/widget/carousel_slider.dart';
 import 'dart:ui';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -18,7 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
     Movie.fromMap({
       'title': '하모리층 톳 쿠키',
       'body': '톳으로 만나는 제주의 환경',
-      'thumbnail': 'content1.png',
+      'thumbnail': 'content1.PNG',
       'target_amount': '6,000원 남음',
       'like': false,
     }),
@@ -66,6 +73,14 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    return Scaffold(
+      body: Container(
+        child: _buildListView(),
+      ),
+    );
+  }
+
+  Widget _buildListView() {
     return ListView(
       children: <Widget>[
         Stack(
