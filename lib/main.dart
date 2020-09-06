@@ -19,7 +19,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyappState extends State<MyApp> {
-  TabController controller;
   @override
   Widget build(BuildContext context) {
     return MultiProvider(

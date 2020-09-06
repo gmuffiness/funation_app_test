@@ -105,6 +105,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       _buildPasswordTF(),
                       _buildForgotPasswordBtn(),
                       _buildRememberMeCheckbox(),
+                      // 메일 인증 안했을 시 나오게 되는 경고 박스
                       (fp.getUser() != null &&
                               fp.getUser().isEmailVerified == false)
                           ? Container(
