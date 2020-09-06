@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:netflix_clone_practice/model/firebase_provider.dart';
+import 'package:netflix_clone_practice/screen/signup_page.dart';
 import 'package:netflix_clone_practice/utilities/constants.dart';
+import 'package:netflix_clone_practice/widget/login_button.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -138,7 +140,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           : Container(),
                       _buildLoginBtn(),
                       _buildSignInWithText(),
-                      _buildSocialBtnColumn(),
+                      // _buildSocialBtnColumn(),
+                      _builGoogleLoginButton(),
                       _buildSignupBtn(),
                     ],
                   ),
@@ -148,6 +151,26 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  LoginButton _builGoogleLoginButton() {
+    return LoginButton(
+      image: Image.asset(
+        'images/glogo.png',
+        width: 40.0,
+        height: 40.0,
+      ),
+      text: Text(
+        '구글 계정으로 로그인하기',
+        style: TextStyle(color: Colors.black87, fontSize: 15.0),
+      ),
+      color: Colors.white,
+      radius: 4.0,
+      onPressed: () {
+        FocusScope.of(context).requestFocus(new FocusNode()); // 키보드 감춤
+        _signInWithGoogle();
+      },
     );
   }
 
@@ -335,6 +358,9 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
           ),
+          SizedBox(
+            width: 15,
+          ),
           Container(
             // padding: EdgeInsets.symmetric(vertical: 25.0),
             // width: double.infinity,
@@ -350,7 +376,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               color: Colors.white,
               child: Text(
-                '계정으로 로그인',
+                '구글 계정으로 로그인',
                 style: TextStyle(
                   color: Color(0xFFFFE082),
                   letterSpacing: 1.5,
@@ -372,15 +398,15 @@ class _LoginScreenState extends State<LoginScreen> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
-          _buildSocialBtn(
-            () => print('Facebook 계정으로 시작'),
-            AssetImage(
-              'assets/logos/facebook.jpg',
-            ),
-          ),
-          SizedBox(
-            height: 20,
-          ),
+          // _buildSocialBtn(
+          //   () => print('Facebook 계정으로 시작'),
+          //   AssetImage(
+          //     'assets/logos/facebook.jpg',
+          //   ),
+          // ),
+          // SizedBox(
+          //   height: 20,
+          // ),
           _buildSocialBtn(
             () => print('Google 계정으로 시작'),
             AssetImage(
@@ -394,7 +420,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Widget _buildSignupBtn() {
     return GestureDetector(
-      onTap: () => print('Sign Up Button Pressed'),
+      onTap: () => Navigator.push(
+          context, MaterialPageRoute(builder: (context) => SignUpPage())),
       child: RichText(
         text: TextSpan(
           children: [

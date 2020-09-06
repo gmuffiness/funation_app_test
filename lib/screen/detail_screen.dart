@@ -1,6 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:netflix_clone_practice/model/firebase_provider.dart';
 import 'package:netflix_clone_practice/model/movie_model.dart';
 import 'dart:ui';
+
+import 'package:netflix_clone_practice/screen/charity_screen.dart';
+import 'package:provider/provider.dart';
 
 class DetailScreen extends StatefulWidget {
   final Movie movie;
@@ -12,17 +17,39 @@ class DetailScreen extends StatefulWidget {
 }
 
 class _DetailScreenState extends State<DetailScreen> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  FirebaseProvider fp;
+
+  // 컬렉션명
+  String colName = "";
+
+  // 필드명
+  final String fnUID = "UID";
+  final String fnCoin = "coin";
+  final String fnDatetime = "datetime";
+
+  List coinList = List();
+  List _coinList = List();
+  int sum = 0;
+
+  TextEditingController _newCoinCon = TextEditingController();
+  TextEditingController _undCoinCon = TextEditingController();
+
   bool like = false;
 
   @override
   void initState() {
     super.initState();
     like = widget.movie.like;
+    colName = widget.movie.title;
   }
 
   @override
   Widget build(BuildContext context) {
+    fp = Provider.of<FirebaseProvider>(context);
+
     return Scaffold(
+      key: _scaffoldKey,
       body: Container(
         child: SafeArea(
           child: ListView(
@@ -76,7 +103,9 @@ class _DetailScreenState extends State<DetailScreen> {
                                 Container(
                                   padding: EdgeInsets.all(3),
                                   child: RaisedButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      showCreateDocDialog();
+                                    },
                                     color: Colors.amber,
                                     child: Row(
                                       mainAxisAlignment:
@@ -207,5 +236,78 @@ class _DetailScreenState extends State<DetailScreen> {
         ),
       ),
     );
+  }
+
+  void createDoc(String coin) {
+    if (coin == int) {
+      Firestore.instance.collection(colName).add({
+        fnUID: fp.getUser().uid,
+        fnCoin: coin,
+        fnDatetime: Timestamp.now(),
+      });
+    } else {
+      _alertIntWarning();
+    }
+  }
+
+  void showCreateDocDialog() {
+    showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text("${widget.movie.title}와 함께 기부하기"),
+          content: Container(
+            height: 200,
+            child: Column(
+              children: <Widget>[
+                Text('기부하실 금액을 입력해주세요.'),
+                TextField(
+                  decoration: InputDecoration(labelText: "금액"),
+                  controller: _newCoinCon,
+                ),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text("Cancel"),
+              onPressed: () {
+                _newCoinCon.clear();
+                Navigator.pop(context);
+              },
+            ),
+            FlatButton(
+              child: Text("Create"),
+              onPressed: () {
+                if (_newCoinCon.text.isNotEmpty) {
+                  createDoc(_newCoinCon.text);
+                }
+
+                _newCoinCon.clear();
+                Navigator.pop(context);
+              },
+            )
+          ],
+        );
+      },
+    );
+  }
+
+  void _alertIntWarning() {
+    _scaffoldKey.currentState
+      ..hideCurrentSnackBar()
+      ..showSnackBar(
+        SnackBar(
+          backgroundColor: Colors.deepOrangeAccent,
+          duration: Duration(seconds: 5),
+          content: Text("$fnCoin 은 숫자가 아닙니다. 기부하실 금액을 입력해주세요."),
+          action: SnackBarAction(
+            label: "Done",
+            textColor: Colors.white,
+            onPressed: () {},
+          ),
+        ),
+      );
   }
 }

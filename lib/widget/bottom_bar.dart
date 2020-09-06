@@ -48,7 +48,7 @@ class Bottom extends StatelessWidget {
                 size: 18,
               ),
               child: Text(
-                '기부단체',
+                '기부니들',
                 style: TextStyle(fontSize: 9),
               ),
             ),

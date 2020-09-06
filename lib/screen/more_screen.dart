@@ -83,7 +83,20 @@ class MoreScreen extends StatelessWidget {
                   ),
                 ),
               ),
-            )
+            ),
+            Container(
+              margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              child: RaisedButton(
+                color: Colors.redAccent,
+                child: Text(
+                  "SIGN OUT",
+                  style: TextStyle(color: Colors.white),
+                ),
+                onPressed: () {
+                  fp.signOut();
+                },
+              ),
+            ),
           ],
         ),
       ),

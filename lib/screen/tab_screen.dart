@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:netflix_clone_practice/model/firebase_provider.dart';
+import 'package:netflix_clone_practice/screen/charity_screen.dart';
 import 'package:netflix_clone_practice/screen/home_screen.dart';
 import 'package:netflix_clone_practice/screen/login_screen.dart';
 import 'package:netflix_clone_practice/screen/more_screen.dart';
@@ -36,11 +37,7 @@ class _TabScreenState extends State<TabScreen> {
                   child: Text('check'),
                 ),
               ),
-              Container(
-                child: Center(
-                  child: Text('charity'),
-                ),
-              ),
+              CharityScreen(),
               MoreScreen(),
             ],
           ),

@@ -23,23 +23,23 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   List<Movie> movies = [
     Movie.fromMap({
-      'title': '하모리층 톳 쿠키',
-      'body': '톳으로 만나는 제주의 환경',
+      'title': 'SmallAction',
+      'body': '업사이클링으로 함께 환경을 살려요.',
+      'thumbnail': 'smallaction.PNG',
+      'target_amount': '6,000원 남음',
+      'like': false,
+    }),
+    Movie.fromMap({
+      'title': 'OrangeDried',
+      'body': '맛있는 건어물',
       'thumbnail': 'content1.PNG',
       'target_amount': '6,000원 남음',
       'like': false,
     }),
     Movie.fromMap({
-      'title': '자연에서 만들어서 자연스러운 백',
-      'body': 'test1',
+      'title': 'CharCoalPearl',
+      'body': '숯진주연구소의 술잔/머들러/목걸이',
       'thumbnail': 'content2.png',
-      'target_amount': '6,000원 남음',
-      'like': false,
-    }),
-    Movie.fromMap({
-      'title': '고기인듯 고기아닌 콩고기',
-      'body': 'test2',
-      'thumbnail': 'content3.png',
       'target_amount': '6,000원 남음',
       'like': false,
     }),
