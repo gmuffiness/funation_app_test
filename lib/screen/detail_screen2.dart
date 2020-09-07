@@ -22,7 +22,6 @@ class _DetailScreen2State extends State<DetailScreen2> {
   FirebaseProvider fp;
 
   // 컬렉션명
-  String colName = "";
 
   // 필드명
   final String fnUID = "UID";
@@ -45,6 +44,7 @@ class _DetailScreen2State extends State<DetailScreen2> {
   @override
   Widget build(BuildContext context) {
     fp = Provider.of<FirebaseProvider>(context);
+    String colName = widget.movie[fnMade].toString();
 
     return Scaffold(
       key: _scaffoldKey,
@@ -100,7 +100,7 @@ class _DetailScreen2State extends State<DetailScreen2> {
                                   padding: EdgeInsets.all(3),
                                   child: RaisedButton(
                                     onPressed: () {
-                                      showCreateDocDialog();
+                                      showCreateDocDialog(colName);
                                     },
                                     color: Colors.amber,
                                     child: Row(
@@ -217,9 +217,14 @@ class _DetailScreen2State extends State<DetailScreen2> {
     );
   }
 
-  void createDoc(String coin) {
-    if (coin == int) {
-      Firestore.instance.collection(colName).add({
+  void createDoc(String coin, colname) {
+    try {
+      int.parse(coin).runtimeType == int;
+    } on FormatException {
+      _alertIntWarning();
+    }
+    if (int.parse(coin).runtimeType == int) {
+      Firestore.instance.collection(colname).add({
         fnUID: fp.getUser().uid,
         fnCoin: coin,
         fnDatetime: Timestamp.now(),
@@ -229,13 +234,13 @@ class _DetailScreen2State extends State<DetailScreen2> {
     }
   }
 
-  void showCreateDocDialog() {
+  void showCreateDocDialog(colname) {
     showDialog(
       barrierDismissible: false,
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text("${widget.movie[fnName].toString()}와 함께 기부하기"),
+          title: Text("${widget.movie[fnMade].toString()}와 함께 기부하기"),
           content: Container(
             height: 200,
             child: Column(
@@ -260,7 +265,7 @@ class _DetailScreen2State extends State<DetailScreen2> {
               child: Text("Create"),
               onPressed: () {
                 if (_newCoinCon.text.isNotEmpty) {
-                  createDoc(_newCoinCon.text);
+                  createDoc(_newCoinCon.text, colname);
                 }
 
                 _newCoinCon.clear();
@@ -274,6 +279,7 @@ class _DetailScreen2State extends State<DetailScreen2> {
   }
 
   void _alertIntWarning() {
+    Navigator.pop(context);
     _scaffoldKey.currentState
       ..hideCurrentSnackBar()
       ..showSnackBar(

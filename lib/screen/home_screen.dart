@@ -4,7 +4,7 @@ import 'package:netflix_clone_practice/model/api_adapter.dart';
 import 'package:netflix_clone_practice/model/firebase_provider.dart';
 import 'package:netflix_clone_practice/model/movie_model.dart';
 import 'package:netflix_clone_practice/screen/login_screen.dart';
-import 'package:netflix_clone_practice/screen/more_screen.dart';
+import 'package:netflix_clone_practice/screen/my_screen.dart';
 import 'package:netflix_clone_practice/screen/search_screen.dart';
 import 'package:netflix_clone_practice/widget/bottom_bar.dart';
 import 'package:netflix_clone_practice/widget/box_slider.dart';
@@ -27,6 +27,7 @@ final String fnDescription = "body";
 final String fnDatetime = "pub_date";
 final String fnThumb = "thumb";
 final String fnCoin = "target_amount";
+final String fnMade = "made";
 
 List myData = [];
 Map dataMap;
@@ -53,8 +54,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void initState() {
     super.initState();
+    setState(() {
+      myData = [];
+    });
     _test();
-    // sample = myData[0];
   }
 
   List<Movie> movies = [

@@ -9,7 +9,7 @@ import 'package:netflix_clone_practice/screen/home_screen.dart';
 class BoxSlider2 extends StatelessWidget {
   final List movies;
   final Map movie;
-
+  // List<Widget> results = [];
   BoxSlider2({this.movies, this.movie});
 
   @override
@@ -34,6 +34,7 @@ class BoxSlider2 extends StatelessWidget {
 
 List<Widget> makeBoxImages(BuildContext context, List movies) {
   List<Widget> results = [];
+  print(movies.length);
   for (var i = 0; i < movies.length; i++) {
     results.add(
       InkWell(

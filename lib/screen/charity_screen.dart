@@ -15,9 +15,9 @@ class _CharityScreenState extends State<CharityScreen> {
   FirebaseProvider fp;
 
   // 컬렉션명
-  String colname1 = "SmallAction";
-  String colname2 = "OrangeDried";
-  String colname3 = "CharCoalPearl";
+  String colname1 = "스몰액션";
+  String colname2 = "오렌지건어물";
+  String colname3 = "숯진주연구소";
   String colname = "";
   Colname colnameGroup = Colname.SmallAction;
 

@@ -5,7 +5,7 @@ import 'package:netflix_clone_practice/model/firebase_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class MoreScreen extends StatelessWidget {
+class MyPage extends StatelessWidget {
   // GoogleSignInAccount _currentUser;
   FirebaseProvider fp;
   @override
@@ -83,6 +83,50 @@ class MoreScreen extends StatelessWidget {
                   ),
                 ),
               ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Column(
+                  children: [
+                    Container(
+                      padding: EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        color: Colors.amber[800],
+                        borderRadius: BorderRadius.all(Radius.circular(5)),
+                      ),
+                      child: Text('기부 참여'),
+                    ),
+                    Text('35건')
+                  ],
+                ),
+                Column(
+                  children: [
+                    Container(
+                      padding: EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        color: Colors.amber[800],
+                        borderRadius: BorderRadius.all(Radius.circular(5)),
+                      ),
+                      child: Text('총 기부금'),
+                    ),
+                    Text('\$100')
+                  ],
+                ),
+                Column(
+                  children: [
+                    Container(
+                      padding: EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        color: Colors.amber[800],
+                        borderRadius: BorderRadius.all(Radius.circular(5)),
+                      ),
+                      child: Text('기부니가 된지'),
+                    ),
+                    Text('53일')
+                  ],
+                ),
+              ],
             ),
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),

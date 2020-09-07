@@ -3,7 +3,7 @@ import 'package:netflix_clone_practice/model/auth_page.dart';
 import 'package:netflix_clone_practice/model/firebase_provider.dart';
 import 'package:netflix_clone_practice/screen/home_screen.dart';
 import 'package:netflix_clone_practice/screen/login_screen.dart';
-import 'package:netflix_clone_practice/screen/more_screen.dart';
+import 'package:netflix_clone_practice/screen/my_screen.dart';
 import 'package:netflix_clone_practice/screen/search_screen.dart';
 import 'package:netflix_clone_practice/widget/bottom_bar.dart';
 import 'package:provider/provider.dart';
