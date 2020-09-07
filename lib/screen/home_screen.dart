@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:netflix_clone_practice/model/api_adapter.dart';
 import 'package:netflix_clone_practice/model/firebase_provider.dart';
@@ -7,6 +8,7 @@ import 'package:netflix_clone_practice/screen/more_screen.dart';
 import 'package:netflix_clone_practice/screen/search_screen.dart';
 import 'package:netflix_clone_practice/widget/bottom_bar.dart';
 import 'package:netflix_clone_practice/widget/box_slider.dart';
+import 'package:netflix_clone_practice/widget/box_slider2.dart';
 import 'package:netflix_clone_practice/widget/circle_slider.dart';
 import 'package:netflix_clone_practice/widget/carousel_slider.dart';
 import 'dart:ui';
@@ -20,7 +22,41 @@ class HomeScreen extends StatefulWidget {
   _HomeScreenState createState() => _HomeScreenState();
 }
 
+final String fnName = "title";
+final String fnDescription = "body";
+final String fnDatetime = "pub_date";
+final String fnThumb = "thumb";
+final String fnCoin = "target_amount";
+
+List myData = [];
+Map dataMap;
+
 class _HomeScreenState extends State<HomeScreen> {
+  _test() {
+    CollectionReference collectionReference =
+        Firestore.instance.collection('Posts');
+    collectionReference.snapshots().listen((snapshot) {
+      for (int i = 0; i < snapshot.documents.length; i++) {
+        var tmp = snapshot.documents[i].data;
+        // Map<String, dynamic>.from(tmp); // from _internallinkedhashmap to Map인데, 별로 필요는 없는듯?
+        myData.add(tmp);
+      }
+      setState(() {
+        dataMap = snapshot.documents[0].data;
+      });
+      // Map<String, dynamic>.from(myData);
+      // var tmp = snapshot.documents.map((element) {
+      // return myData.add(element);
+      // }).toList();
+    });
+  }
+
+  void initState() {
+    super.initState();
+    _test();
+    // sample = myData[0];
+  }
+
   List<Movie> movies = [
     Movie.fromMap({
       'title': 'SmallAction',
@@ -98,6 +134,9 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
         ),
+        // Container(
+        //   child: Text(dataMap["title"].toString()),
+        // ),
         Container(
           padding: EdgeInsets.only(left: 10),
           child: Text(
@@ -105,8 +144,8 @@ class _HomeScreenState extends State<HomeScreen> {
             style: TextStyle(fontSize: 10, color: Colors.black45),
           ),
         ),
-        BoxSlider(
-          movies: movies,
+        BoxSlider2(
+          movies: myData,
         )
       ],
     );
