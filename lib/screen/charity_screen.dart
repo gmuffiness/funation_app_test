@@ -126,6 +126,7 @@ class _CharityScreenState extends State<CharityScreen> {
               groupValue: colname,
               onChanged: (value) {
                 setState(() {
+                  sum = 0;
                   colnameGroup = value;
                   colname = colname1;
                   coinList = List();
@@ -138,6 +139,7 @@ class _CharityScreenState extends State<CharityScreen> {
               groupValue: colname,
               onChanged: (value) {
                 setState(() {
+                  sum = 0;
                   colnameGroup = value;
                   colname = colname2;
                   coinList = List();
@@ -150,6 +152,7 @@ class _CharityScreenState extends State<CharityScreen> {
               groupValue: colname,
               onChanged: (value) {
                 setState(() {
+                  sum = 0;
                   colnameGroup = value;
                   colname = colname3;
                   coinList = List();
@@ -163,7 +166,7 @@ class _CharityScreenState extends State<CharityScreen> {
                 coinList = List();
               });
             },
-            child: Text('현재 모인 총금액 확인하기'),
+            child: Text('{$colname}에 현재 모인 총금액 확인하기'),
           ),
           Text(
             '$sum 원',
