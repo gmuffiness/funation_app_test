@@ -56,17 +56,20 @@ List<Widget> makeBoxImages(BuildContext context, List movies) {
               children: <Widget>[
                 Expanded(
                   // child: Image.asset('images/' + movies[i].thumbnail),
-                  child: Image.network(movies[i][fnThumb]),
+                  child: Image.network(movies[i].getImage()),
                 ),
                 Text(
-                  movies[i][fnName].toString(),
+                  // movies[i][fnName].toString(),
+                  movies[i].getTitle().toString(),
                 ),
                 Text(
-                  movies[i][fnDescription].toString(),
+                  // movies[i][fnDescription].toString(),
+                  movies[i].getBody().toString(),
                   style: TextStyle(fontSize: 11),
                 ),
                 Text(
-                  '${(movies[i][fnCoinSum] / movies[i][fnGoal] * 100).toStringAsFixed(2)}% 도네이션',
+                  // '${(movies[i][fnCoinSum] / movies[i][fnGoal] * 100).toStringAsFixed(2)}% 도네이션',
+                  'test',
                   style: TextStyle(
                     fontSize: 11,
                     color: Colors.blueAccent,

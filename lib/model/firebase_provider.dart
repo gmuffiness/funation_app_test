@@ -1,7 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:logger/logger.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:netflix_clone_practice/model/post_model.dart';
 
 Logger logger = Logger();
 
@@ -139,5 +141,55 @@ class FirebaseProvider with ChangeNotifier {
     String returnValue = _lastFirebaseResponse;
     _lastFirebaseResponse = null;
     return returnValue;
+  }
+}
+
+class PostsProvider with ChangeNotifier {
+  CollectionReference postCollectionReference =
+      Firestore.instance.collection('Posts');
+
+  final String fnName = "title";
+  final String fnDescription = "body";
+  final String fnDatetime = "pub_date";
+  final String fnThumb = "thumb";
+  final String fnGoal = "target_amount";
+  final String fnMade = "made";
+  final String fnCoinSum = "coinSum";
+  final String fnDocID = "docID";
+
+  // Q. Post형식만 list에 들어올 수 있게 하려는 코드인데, tmp에서 어떻게 해결해야할지 아직 모르겠음.
+  // List<Post> posts = [];
+  List posts = [];
+
+  PostsProvider() {
+    // posts = [];
+    _fetchPost();
+  }
+
+  _fetchPost() {
+    CollectionReference collectionReference =
+        Firestore.instance.collection('Posts');
+    collectionReference.snapshots().listen((snapshot) {
+      for (int i = 0; i < snapshot.documents.length; i++) {
+        var post = snapshot.documents[i].data;
+        posts.add(post);
+      }
+    });
+  }
+
+  getPosts() {
+    return posts;
+  }
+
+  getImage(index) {
+    return posts[index][fnThumb];
+  }
+
+  getTitle(index) {
+    return posts[index][fnName];
+  }
+
+  getBody(index) {
+    return posts[index][fnDescription];
   }
 }

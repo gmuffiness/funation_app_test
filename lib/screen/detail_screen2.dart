@@ -21,7 +21,7 @@ class DetailScreen2 extends StatefulWidget {
 class _DetailScreen2State extends State<DetailScreen2> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   FirebaseProvider fp;
-
+  PostsProvider pp;
   // 컬렉션명
 
   // 필드명
@@ -45,7 +45,9 @@ class _DetailScreen2State extends State<DetailScreen2> {
   @override
   Widget build(BuildContext context) {
     fp = Provider.of<FirebaseProvider>(context);
-    String colName = widget.movie[fndocID].toString();
+    pp = Provider.of<PostsProvider>(context);
+
+    // String colName = widget.movie[fndocID].toString();
 
     return Scaffold(
       key: _scaffoldKey,
@@ -72,11 +74,11 @@ class _DetailScreen2State extends State<DetailScreen2> {
                           child: Container(
                             child: Column(
                               children: <Widget>[
-                                Container(
-                                  padding: EdgeInsets.fromLTRB(0, 45, 0, 10),
-                                  child: Image.network(
-                                      widget.movie[fnThumb].toString()),
-                                ),
+                                // Container(
+                                //   padding: EdgeInsets.fromLTRB(0, 45, 0, 10),
+                                //   child: Image.network(
+                                //       widget.movie[fnThumb].toString()),
+                                // ),
                                 Container(
                                   padding: EdgeInsets.all(7),
                                   child: Text(
@@ -86,48 +88,49 @@ class _DetailScreen2State extends State<DetailScreen2> {
                                         fontSize: 23, color: Colors.white),
                                   ),
                                 ),
-                                Container(
-                                  padding: EdgeInsets.all(7),
-                                  child: Text(
-                                    widget.movie[fnName].toString(),
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 16),
-                                  ),
-                                ),
-                                Container(
-                                  padding: EdgeInsets.all(3),
-                                  child: RaisedButton(
-                                    onPressed: () {
-                                      showCreateDocDialog(colName);
-                                    },
-                                    color: Colors.amber,
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: <Widget>[
-                                        Text(
-                                          '추첨 참여하러 가기',
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
+                                // Container(
+                                //   padding: EdgeInsets.all(7),
+                                //   child: Text(
+                                //     widget.movie[fnName].toString(),
+
+                                //     textAlign: TextAlign.center,
+                                //     style: TextStyle(
+                                //         color: Colors.white,
+                                //         fontWeight: FontWeight.bold,
+                                //         fontSize: 16),
+                                //   ),
+                                // ),
+                                // Container(
+                                //   padding: EdgeInsets.all(3),
+                                //   child: RaisedButton(
+                                //     onPressed: () {
+                                //       showCreateDocDialog(colName);
+                                //     },
+                                //     color: Colors.amber,
+                                //     child: Row(
+                                //       mainAxisAlignment:
+                                //           MainAxisAlignment.center,
+                                //       children: <Widget>[
+                                //         Text(
+                                //           '추첨 참여하러 가기',
+                                //           style: TextStyle(
+                                //               color: Colors.white,
+                                //               fontWeight: FontWeight.bold),
+                                //         ),
+                                //       ],
+                                //     ),
+                                //   ),
+                                // ),
                                 // SizedBox(
                                 //   height: 5,
                                 // ),
-                                CustomProgressBar(
-                                  width: 200,
-                                  value: int.parse(
-                                      widget.movie[fnCoinSum].toString()),
-                                  totalValue: int.parse(
-                                      widget.movie[fnGoal].toString()),
-                                ),
+                                // CustomProgressBar(
+                                //   width: 200,
+                                //   value: int.parse(
+                                //       widget.movie[fnCoinSum].toString()),
+                                //   totalValue: int.parse(
+                                //       widget.movie[fnGoal].toString()),
+                                // ),
                                 SizedBox(
                                   height: 20,
                                 ),
@@ -252,7 +255,7 @@ class _DetailScreen2State extends State<DetailScreen2> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text("${widget.movie[fnMade]}와 함께 기부하기"),
+          // title: Text("${widget.movie[fnMade]}와 함께 기부하기"),
           content: Container(
             height: 200,
             child: Column(

@@ -23,44 +23,45 @@ class HomeScreen extends StatefulWidget {
   _HomeScreenState createState() => _HomeScreenState();
 }
 
-final String fnName = "title";
-final String fnDescription = "body";
-final String fnDatetime = "pub_date";
-final String fnThumb = "thumb";
-final String fnGoal = "target_amount";
-final String fnMade = "made";
-final String fnCoinSum = "coinSum";
-final String fndocID = "docID";
-List myData = [];
-Map dataMap;
+// final String fnName = "title";
+// final String fnDescription = "body";
+// final String fnDatetime = "pub_date";
+// final String fnThumb = "thumb";
+// final String fnGoal = "target_amount";
+// final String fnMade = "made";
+// final String fnCoinSum = "coinSum";
+// final String fndocID = "docID";
+// List myData = [];
+// Map dataMap;
 
 class _HomeScreenState extends State<HomeScreen> {
-  _test() {
-    CollectionReference collectionReference =
-        Firestore.instance.collection('Posts');
-    collectionReference.snapshots().listen((snapshot) {
-      for (int i = 0; i < snapshot.documents.length; i++) {
-        var tmp = snapshot.documents[i].data;
-        // Map<String, dynamic>.from(tmp); // from _internallinkedhashmap to Map인데, 별로 필요는 없는듯?
-        myData.add(tmp);
-        // CollectionReference collectionReference2 = collectionReference.instance.collection('User_log');
-      }
-      setState(() {
-        dataMap = snapshot.documents[0].data;
-      });
-      // Map<String, dynamic>.from(myData);
-      // var tmp = snapshot.documents.map((element) {
-      // return myData.add(element);
-      // }).toList();
-    });
-  }
+  PostsProvider pp;
+  // _test() {
+  //   CollectionReference collectionReference =
+  //       Firestore.instance.collection('Posts');
+  //   collectionReference.snapshots().listen((snapshot) {
+  //     for (int i = 0; i < snapshot.documents.length; i++) {
+  //       var tmp = snapshot.documents[i].data;
+  //       // Map<String, dynamic>.from(tmp); // from _internallinkedhashmap to Map인데, 별로 필요는 없는듯?
+  //       myData.add(tmp);
+  //       // CollectionReference collectionReference2 = collectionReference.instance.collection('User_log');
+  //     }
+  //     setState(() {
+  //       dataMap = snapshot.documents[0].data;
+  //     });
+  //     // Map<String, dynamic>.from(myData);
+  //     // var tmp = snapshot.documents.map((element) {
+  //     // return myData.add(element);
+  //     // }).toList();
+  //   });
+  // }
 
   void initState() {
     super.initState();
     setState(() {
-      myData = [];
+      // myData = [];
     });
-    _test();
+    // _test();
   }
 
   List<Movie> movies = [
@@ -94,27 +95,9 @@ class _HomeScreenState extends State<HomeScreen> {
     }),
   ];
 
-  // List<Movie> movies = [];
-  // bool isLoading = false;
-
-  // _fetchMovie() async {
-  //   setState(() {
-  //     isLoading = true;
-  //   });
-  //   final response =
-  //       await http.get('http://lunarbear.pythonanywhere.com/post/post/');
-  //   if (response.statusCode == 200) {
-  //     setState(() {
-  //       movies = parseMovies(utf8.decode(response.bodyBytes));
-  //       isLoading = false;
-  //     });
-  //   } else {
-  //     throw Exception('failed to load data');
-  //   }
-  // }
-
   @override
   Widget build(BuildContext context) {
+    pp = Provider.of<PostsProvider>(context);
     return Scaffold(
       body: Container(
         child: _buildListView(),
@@ -123,6 +106,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildListView() {
+    print(pp.getPosts());
     return ListView(
       children: <Widget>[
         Stack(
@@ -141,9 +125,6 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
         ),
-        // Container(
-        //   child: Text(dataMap["title"].toString()),
-        // ),
         Container(
           padding: EdgeInsets.only(left: 10),
           child: Text(
@@ -152,8 +133,8 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
         BoxSlider2(
-          movies: myData,
-        )
+          movies: pp.getPosts(),
+        ),
       ],
     );
   }
