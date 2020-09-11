@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:netflix_clone_practice/model/firebase_provider.dart';
+import 'package:netflix_clone_practice/screen/carousel_screen.dart';
 import 'package:netflix_clone_practice/screen/charity_screen.dart';
+import 'package:netflix_clone_practice/screen/check_screen.dart';
 import 'package:netflix_clone_practice/screen/home_screen.dart';
 import 'package:netflix_clone_practice/screen/login_screen.dart';
 import 'package:netflix_clone_practice/screen/my_screen.dart';
@@ -32,11 +34,8 @@ class _TabScreenState extends State<TabScreen> {
             children: <Widget>[
               HomeScreen(),
               SearchScreen(),
-              Container(
-                child: Center(
-                  child: Text('check'),
-                ),
-              ),
+              // CheckScreen(),
+              CarouselDemo(),
               CharityScreen(),
               MyPage(),
             ],
