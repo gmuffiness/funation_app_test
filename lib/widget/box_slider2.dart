@@ -64,7 +64,14 @@ List<Widget> makeBoxImages(BuildContext context, List movies) {
                 Text(
                   movies[i][fnDescription].toString(),
                   style: TextStyle(fontSize: 11),
-                )
+                ),
+                Text(
+                  movies[i][fnCoin].toString(),
+                  style: TextStyle(
+                    fontSize: 11,
+                    color: Colors.blueAccent,
+                  ),
+                ),
               ],
             ),
           ),

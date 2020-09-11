@@ -27,7 +27,7 @@ class _CharityScreenState extends State<CharityScreen> {
   final String fnDatetime = "datetime";
 
   List coinList = List();
-  List _coinList = List();
+  // List _coinList = List();
   int sum = 0;
 
   TextEditingController _newCoinCon = TextEditingController();
@@ -166,7 +166,7 @@ class _CharityScreenState extends State<CharityScreen> {
                 coinList = List();
               });
             },
-            child: Text('{$colname}에 현재 모인 총금액 확인하기'),
+            child: Text('${colname}에 현재 모인 총금액 확인하기'),
           ),
           Text(
             '$sum 원',

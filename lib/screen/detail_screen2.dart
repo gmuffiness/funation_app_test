@@ -6,6 +6,7 @@ import 'dart:ui';
 
 import 'package:netflix_clone_practice/screen/charity_screen.dart';
 import 'package:netflix_clone_practice/screen/home_screen.dart';
+import 'package:netflix_clone_practice/widget/progress_bar_by_value.dart';
 import 'package:provider/provider.dart';
 
 class DetailScreen2 extends StatefulWidget {
@@ -117,9 +118,21 @@ class _DetailScreen2State extends State<DetailScreen2> {
                                     ),
                                   ),
                                 ),
-                                SizedBox(
-                                  height: 60,
+                                // SizedBox(
+                                //   height: 5,
+                                // ),
+                                CustomProgressBar(
+                                  width: 200,
+                                  value: 50,
+
+                                  //
+                                  totalValue: 100,
+                                  // => widget.movie[fnCoin].toString()
                                 ),
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                Text(sum.toString())
                               ],
                             ),
                           ),

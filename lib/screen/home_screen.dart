@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:netflix_clone_practice/model/api_adapter.dart';
 import 'package:netflix_clone_practice/model/firebase_provider.dart';
 import 'package:netflix_clone_practice/model/movie_model.dart';
+import 'package:netflix_clone_practice/screen/carousel_screen.dart';
 import 'package:netflix_clone_practice/screen/login_screen.dart';
 import 'package:netflix_clone_practice/screen/my_screen.dart';
 import 'package:netflix_clone_practice/screen/search_screen.dart';
@@ -41,6 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
         var tmp = snapshot.documents[i].data;
         // Map<String, dynamic>.from(tmp); // from _internallinkedhashmap to Map인데, 별로 필요는 없는듯?
         myData.add(tmp);
+        // CollectionReference collectionReference2 = collectionReference.instance.collection('User_log');
       }
       setState(() {
         dataMap = snapshot.documents[0].data;
@@ -125,6 +127,7 @@ class _HomeScreenState extends State<HomeScreen> {
         Stack(
           children: <Widget>[
             CarouselImage(movies: movies),
+            // CarouselDemo(),
             TopBar(),
           ],
         ),
