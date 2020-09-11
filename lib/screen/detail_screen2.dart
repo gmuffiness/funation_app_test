@@ -45,7 +45,7 @@ class _DetailScreen2State extends State<DetailScreen2> {
   @override
   Widget build(BuildContext context) {
     fp = Provider.of<FirebaseProvider>(context);
-    String colName = widget.movie[fnMade].toString();
+    String colName = widget.movie[fndocID].toString();
 
     return Scaffold(
       key: _scaffoldKey,
@@ -123,11 +123,10 @@ class _DetailScreen2State extends State<DetailScreen2> {
                                 // ),
                                 CustomProgressBar(
                                   width: 200,
-                                  value: 50,
-
-                                  //
-                                  totalValue: 100,
-                                  // => widget.movie[fnCoin].toString()
+                                  value: int.parse(
+                                      widget.movie[fnCoinSum].toString()),
+                                  totalValue: int.parse(
+                                      widget.movie[fnGoal].toString()),
                                 ),
                                 SizedBox(
                                   height: 20,
@@ -237,7 +236,7 @@ class _DetailScreen2State extends State<DetailScreen2> {
       _alertIntWarning();
     }
     if (int.parse(coin).runtimeType == int) {
-      Firestore.instance.collection(colname).add({
+      Firestore.instance.collection('Posts/' + colname + '/User_log').add({
         fnUID: fp.getUser().uid,
         fnCoin: coin,
         fnDatetime: Timestamp.now(),

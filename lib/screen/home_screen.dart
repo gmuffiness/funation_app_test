@@ -27,9 +27,10 @@ final String fnName = "title";
 final String fnDescription = "body";
 final String fnDatetime = "pub_date";
 final String fnThumb = "thumb";
-final String fnCoin = "target_amount";
+final String fnGoal = "target_amount";
 final String fnMade = "made";
-
+final String fnCoinSum = "coinSum";
+final String fndocID = "docID";
 List myData = [];
 Map dataMap;
 

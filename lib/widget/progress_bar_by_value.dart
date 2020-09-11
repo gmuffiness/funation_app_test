@@ -11,6 +11,8 @@ class CustomProgressBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double ratio = value / totalValue;
+    print(value);
+    print(totalValue);
     double ratio_text = ratio * 100;
     return Column(
       children: [

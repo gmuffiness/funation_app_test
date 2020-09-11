@@ -66,7 +66,7 @@ List<Widget> makeBoxImages(BuildContext context, List movies) {
                   style: TextStyle(fontSize: 11),
                 ),
                 Text(
-                  movies[i][fnCoin].toString(),
+                  movies[i][fnGoal].toString(),
                   style: TextStyle(
                     fontSize: 11,
                     color: Colors.blueAccent,

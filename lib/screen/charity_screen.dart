@@ -1,3 +1,5 @@
+// import 'dart:html';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:netflix_clone_practice/model/firebase_provider.dart';
@@ -15,9 +17,9 @@ class _CharityScreenState extends State<CharityScreen> {
   FirebaseProvider fp;
 
   // 컬렉션명
-  String colname1 = "스몰액션";
-  String colname2 = "오렌지건어물";
-  String colname3 = "숯진주연구소";
+  String colname1 = "mP0buDOqPZ98rN70S9E8";
+  String colname2 = "RKISuiAJFpQaqKAvxDAe";
+  String colname3 = "f1PPN4IEpsOQdKpZT3zX";
   String colname = "";
   Colname colnameGroup = Colname.SmallAction;
 
@@ -26,9 +28,11 @@ class _CharityScreenState extends State<CharityScreen> {
   final String fnCoin = "coin";
   final String fnDatetime = "datetime";
 
+  final String fnCoinSum = "coinSum";
   List coinList = List();
   // List _coinList = List();
   int sum = 0;
+  String _fnMade = "";
 
   TextEditingController _newCoinCon = TextEditingController();
   TextEditingController _undCoinCon = TextEditingController();
@@ -43,14 +47,14 @@ class _CharityScreenState extends State<CharityScreen> {
     fp = Provider.of<FirebaseProvider>(context);
     return Scaffold(
       key: _scaffoldKey,
-      appBar: AppBar(title: Text("기부니들 명예의 전당($colname)")),
+      appBar: AppBar(title: Text("기부니들 명예의 전당($_fnMade)")),
       body: ListView(
         children: <Widget>[
           Container(
             height: 300,
             child: StreamBuilder<QuerySnapshot>(
               stream: Firestore.instance
-                  .collection(colname)
+                  .collection('Posts/' + colname + '/User_log')
                   .orderBy(fnDatetime, descending: true)
                   .snapshots(),
               builder: (BuildContext context,
@@ -78,6 +82,7 @@ class _CharityScreenState extends State<CharityScreen> {
                             onLongPress: () {
                               showUpdateOrDeleteDocDialog(document);
                             },
+
                             child: Container(
                               padding: const EdgeInsets.all(8),
                               child: Column(
@@ -116,6 +121,20 @@ class _CharityScreenState extends State<CharityScreen> {
                         );
                       }).toList(),
                     );
+                    // ignore: dead_code
+                    print("checkpoint");
+                    // _coinList = coinList;
+                    sum = coinList.reduce((a, b) => a + b);
+                    coinList = List();
+                  // updateCoinSum(document, sum);
+
+                  // setState(() {
+                  //   print("checkpoint");
+                  //   // _coinList = coinList;
+                  //   sum = coinList.reduce((a, b) => a + b);
+                  //   coinList = List();
+                  //   updateCoinSum(sum);
+                  // });
                 }
               },
             ),
@@ -130,6 +149,7 @@ class _CharityScreenState extends State<CharityScreen> {
                   colnameGroup = value;
                   colname = colname1;
                   coinList = List();
+                  _fnMade = '스몰액션';
                 });
               }),
           RadioListTile(
@@ -143,6 +163,7 @@ class _CharityScreenState extends State<CharityScreen> {
                   colnameGroup = value;
                   colname = colname2;
                   coinList = List();
+                  _fnMade = '오렌지건어물';
                 });
               }),
           RadioListTile(
@@ -156,6 +177,7 @@ class _CharityScreenState extends State<CharityScreen> {
                   colnameGroup = value;
                   colname = colname3;
                   coinList = List();
+                  _fnMade = '숯진주연구소';
                 });
               }),
           RaisedButton(
@@ -164,9 +186,10 @@ class _CharityScreenState extends State<CharityScreen> {
                 // _coinList = coinList;
                 sum = coinList.reduce((a, b) => a + b);
                 coinList = List();
+                updateCoinSum(sum);
               });
             },
-            child: Text('${colname}에 현재 모인 총금액 확인하기'),
+            child: Text('${_fnMade}에 현재 모인 총금액 확인하기'),
           ),
           Text(
             '$sum 원',
@@ -185,7 +208,7 @@ class _CharityScreenState extends State<CharityScreen> {
 
   // 문서 생성 (Create)
   void createDoc(String coin) {
-    Firestore.instance.collection(colname).add({
+    Firestore.instance.collection('Posts/' + colname + '/User_log').add({
       fnUID: fp.getUser().uid,
       fnCoin: coin,
       fnDatetime: Timestamp.now(),
@@ -195,7 +218,7 @@ class _CharityScreenState extends State<CharityScreen> {
   // 문서 조회 (Read)
   void showDocument(String documentID) {
     Firestore.instance
-        .collection(colname)
+        .collection('Posts/' + colname + '/User_log')
         .document(documentID)
         .get()
         .then((doc) {
@@ -205,15 +228,22 @@ class _CharityScreenState extends State<CharityScreen> {
 
   // 문서 갱신 (Update)
   void updateDoc(String docID, String coin) {
-    Firestore.instance.collection(colname).document(docID).updateData({
+    Firestore.instance
+        .collection('Posts/' + colname + '/User_log')
+        .document(docID)
+        .updateData({
       fnUID: fp.getUser().uid,
       fnCoin: coin,
     });
+    print(docID);
   }
 
   // 문서 삭제 (Delete)
   void deleteDoc(String docID) {
-    Firestore.instance.collection(colname).document(docID).delete();
+    Firestore.instance
+        .collection('Posts/' + colname + '/User_log')
+        .document(docID)
+        .delete();
   }
 
   void showCreateDocDialog() {
@@ -324,6 +354,13 @@ class _CharityScreenState extends State<CharityScreen> {
         );
       },
     );
+  }
+
+  void updateCoinSum(int sum) {
+    Firestore.instance.collection('Posts').document(colname).updateData({
+      // fnUID: fp.getUser().uid,
+      fnCoinSum: sum,
+    });
   }
 
   String timestampToStrDateTime(Timestamp ts) {
