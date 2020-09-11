@@ -252,7 +252,7 @@ class _DetailScreen2State extends State<DetailScreen2> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text("${widget.movie[fnMade].toString()}와 함께 기부하기"),
+          title: Text("${widget.movie[fnMade]}와 함께 기부하기"),
           content: Container(
             height: 200,
             child: Column(

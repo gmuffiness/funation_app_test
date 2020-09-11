@@ -66,11 +66,12 @@ List<Widget> makeBoxImages(BuildContext context, List movies) {
                   style: TextStyle(fontSize: 11),
                 ),
                 Text(
-                  movies[i][fnGoal].toString(),
+                  '${(movies[i][fnCoinSum] / movies[i][fnGoal] * 100).toStringAsFixed(2)}% 도네이션',
                   style: TextStyle(
                     fontSize: 11,
                     color: Colors.blueAccent,
                   ),
+                  textAlign: TextAlign.start,
                 ),
               ],
             ),
